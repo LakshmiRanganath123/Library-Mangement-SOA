@@ -1,0 +1,41 @@
+version: "3.9"
+services:
+  user_service:
+    image: python:3.11-slim
+    working_dir: /app
+    volumes:
+      - ./:/app
+    command: sh -c "pip install -r library_system/requirements.txt && uvicorn library_system.user_service.main:app --host 0.0.0.0 --port 8001"
+    ports:
+      - "8001:8001"
+
+  book_service:
+    image: python:3.11-slim
+    working_dir: /app
+    volumes:
+      - ./:/app
+    command: sh -c "pip install -r library_system/requirements.txt && uvicorn library_system.book_service.main:app --host 0.0.0.0 --port 8002"
+    ports:
+      - "8002:8002"
+
+  transaction_service:
+    image: python:3.11-slim
+    working_dir: /app
+    volumes:
+      - ./:/app
+    command: sh -c "pip install -r library_system/requirements.txt && uvicorn library_system.transaction_service.main:app --host 0.0.0.0 --port 8003"
+    ports:
+      - "8003:8003"
+
+  orchestrator_service:
+    image: python:3.11-slim
+    working_dir: /app
+    volumes:
+      - ./:/app
+    command: sh -c "pip install -r library_system/requirements.txt && uvicorn library_system.orchestrator_service.main:app --host 0.0.0.0 --port 8000"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - user_service
+      - book_service
+      - transaction_service

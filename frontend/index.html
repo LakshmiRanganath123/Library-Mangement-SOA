@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📚 Library Management System</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="header-content">
+        <div class="logo">
+          <i class="fas fa-book-open"></i>
+          <h1>Library Management</h1>
+        </div>
+        <div class="status-indicators">
+          <div class="status-item">
+            <i class="fas fa-users"></i>
+            <span>Users</span>
+            <div class="status-dot" id="users-status"></div>
+          </div>
+          <div class="status-item">
+            <i class="fas fa-book"></i>
+            <span>Books</span>
+            <div class="status-dot" id="books-status"></div>
+          </div>
+          <div class="status-item">
+            <i class="fas fa-cogs"></i>
+            <span>System</span>
+            <div class="status-dot" id="system-status"></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="dashboard-grid">
+        <!-- Users Section -->
+        <div class="card users-card">
+          <div class="card-header">
+            <div class="card-title">
+              <i class="fas fa-users"></i>
+              <h2>Users Management</h2>
+            </div>
+            <button class="btn-refresh" id="refresh-users" title="Refresh Users">
+              <i class="fas fa-sync-alt"></i>
+            </button>
+          </div>
+          
+          <div class="card-content">
+            <form class="form-modern" id="add-user-form">
+              <div class="form-group">
+                <div class="input-group">
+                  <i class="fas fa-user"></i>
+                  <input type="text" id="username" placeholder="Username" required>
+                </div>
+                <div class="input-group">
+                  <i class="fas fa-lock"></i>
+                  <input type="password" id="password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn-primary">
+                  <i class="fas fa-plus"></i>
+                  Add User
+                </button>
+              </div>
+            </form>
+            
+            <div class="list-container">
+              <div class="list-header">
+                <span>Registered Users</span>
+                <span class="count" id="users-count">0</span>
+              </div>
+              <div class="list" id="users-list">
+                <div class="loading">Loading users...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Books Section -->
+        <div class="card books-card">
+          <div class="card-header">
+            <div class="card-title">
+              <i class="fas fa-book"></i>
+              <h2>Books Catalog</h2>
+            </div>
+            <button class="btn-refresh" id="refresh-books" title="Refresh Books">
+              <i class="fas fa-sync-alt"></i>
+            </button>
+          </div>
+          
+          <div class="card-content">
+            <form class="form-modern" id="add-book-form">
+              <div class="form-group">
+                <div class="input-group">
+                  <i class="fas fa-book"></i>
+                  <input type="text" id="title" placeholder="Book Title" required>
+                </div>
+                <div class="input-group">
+                  <i class="fas fa-user-pen"></i>
+                  <input type="text" id="author" placeholder="Author Name" required>
+                </div>
+                <div class="input-group">
+                  <i class="fas fa-copy"></i>
+                  <input type="number" id="available_copies" placeholder="Available Copies" min="0" value="1" required>
+                </div>
+                <button type="submit" class="btn-primary">
+                  <i class="fas fa-plus"></i>
+                  Add Book
+                </button>
+              </div>
+            </form>
+            
+            <div class="list-container">
+              <div class="list-header">
+                <span>Book Collection</span>
+                <span class="count" id="books-count">0</span>
+              </div>
+              <div class="list" id="books-list">
+                <div class="loading">Loading books...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Transactions Section -->
+        <div class="card transactions-card">
+          <div class="card-header">
+            <div class="card-title">
+              <i class="fas fa-exchange-alt"></i>
+              <h2>Book Transactions</h2>
+            </div>
+            <button class="btn-refresh" id="refresh-transactions" title="Refresh Transactions">
+              <i class="fas fa-sync-alt"></i>
+            </button>
+          </div>
+          
+          <div class="card-content">
+            <div class="transaction-forms">
+              <div class="transaction-form">
+                <h3><i class="fas fa-arrow-up"></i> Issue Book</h3>
+                <form class="form-modern" id="issue-form">
+                  <div class="form-row">
+                    <div class="input-group">
+                      <i class="fas fa-user"></i>
+                      <select id="issue-user-select" required>
+                        <option value="">Select a user...</option>
+                      </select>
+                    </div>
+                    <div class="input-group">
+                      <i class="fas fa-book"></i>
+                      <select id="issue-book-select" required>
+                        <option value="">Select a book...</option>
+                      </select>
+                    </div>
+                    <button type="submit" class="btn-success">
+                      <i class="fas fa-arrow-up"></i>
+                      Issue Book
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              <div class="transaction-form">
+                <h3><i class="fas fa-arrow-down"></i> Return Book</h3>
+                <form class="form-modern" id="return-form">
+                  <div class="form-row">
+                    <div class="input-group">
+                      <i class="fas fa-receipt"></i>
+                      <input type="number" id="return-tx-id" placeholder="Transaction ID" min="1" required>
+                    </div>
+                    <div class="input-group">
+                      <i class="fas fa-book"></i>
+                      <select id="return-book-select" required>
+                        <option value="">Select a book...</option>
+                      </select>
+                    </div>
+                    <button type="submit" class="btn-warning">
+                      <i class="fas fa-arrow-down"></i>
+                      Return Book
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <div class="transactions-list">
+              <div class="list-header">
+                <span>All Transactions</span>
+                <span class="count" id="transactions-count">0</span>
+              </div>
+              <div class="list" id="transactions-list">
+                <div class="loading">Loading transactions...</div>
+              </div>
+            </div>
+
+            <div class="output-section">
+              <div class="output-header">
+                <i class="fas fa-terminal"></i>
+                <span>Transaction Log</span>
+              </div>
+              <div class="output" id="orchestrator-output">
+                <div class="output-placeholder">
+                  <i class="fas fa-info-circle"></i>
+                  <p>Transaction results will appear here...</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-info">
+          <i class="fas fa-info-circle"></i>
+          <span>Backend services: Users (8001), Books (8002), System (8000)</span>
+        </div>
+        <div class="footer-tip">
+          <i class="fas fa-lightbulb"></i>
+          <span>Open browser devtools for detailed error information</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
